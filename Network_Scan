@@ -1,0 +1,56 @@
+#!/bin/bash
+# Get the current date and time to paste at the top of the file, keeps track specifically for logging
+purposes
+DATE=$(date '+%Y-%m-%d_%H:%M:%S')
+# Set the name of the output file to something memorable and attach the date to it for archiving,
+also saving it in a specific directory
+OUTPUT_FILE="/var/log/NetworkScan_$DATE.txt"
+# Dump network info to console
+echo "================================"
+echo "========= Network Info ========="
+# print the hostname of the server
+echo "Hostname: $(hostname)"
+# print the IP address(es) of the server
+echo "IP address(es): $(hostname -I)"
+# print the default gateway of the server
+echo "Default gateway: $(ip route | grep default | awk '{print $3}')"
+# print the DNS servers of the server
+echo "DNS servers: $(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')"
+# print the open ports of the server
+echo "Open ports: $(netstat -tulpn | grep LISTEN)"
+echo "================================"
+echo "========= Interfaces Info ========="
+# print the available interfaces
+ip -o link show | awk -F': ' '{print $2}' | xargs -I{} sh -c 'echo {}; ip addr show {} | grep
+"inet\|ether"'
+echo "================================"
+echo "========= Routing Table ========="
+# print the current IP routing table
+ip route show
+echo "================================"
+echo "========= Firewall Rules ========="
+# print the current firewall rules
+sudo iptables -L -v -n
+echo "================================"
+# Dump network info to file, take roughly the same echo command but your appending
+echo "================================" >> $OUTPUT_FILE
+echo "========= Network Info =========" >> $OUTPUT_FILE
+echo "Hostname: $(hostname)" >> $OUTPUT_FILE
+echo "IP address(es): $(hostname -I)" >> $OUTPUT_FILE
+echo "Default gateway: $(ip route | grep default | awk '{print $3}')" >> $OUTPUT_FILE
+echo "DNS servers: $(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')" >>
+$OUTPUT_FILE
+echo "Open ports: $(netstat -tulpn | grep LISTEN)" >> $OUTPUT_FILE
+echo "================================" >> $OUTPUT_FILE
+echo "========= Interfaces Info =========" >> $OUTPUT_FILE
+ip -o link show | awk -F': ' '{print $2}' | xargs -n1 -I{} sh -c 'echo {}; ip addr show {} | grep
+"inet\|ether"' >> $OUTPUT_FILE
+echo "================================" >> $OUTPUT_FILE
+echo "========= Routing Table =========" >> $OUTPUT_FILE
+ip route show >> $OUTPUT_FILE
+echo "================================" >> $OUTPUT_FILE
+echo "========= Firewall Rules =========" >> $OUTPUT_FILE
+sudo iptables -L -v -n >> $OUTPUT_FILE
+echo "================================" >> $OUTPUT_FILE
+# Print location of output file
+echo "Network info saved to: $OUTPUT_FILE"
