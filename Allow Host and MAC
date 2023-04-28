@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Allow incoming traffic from specific IP addresses
+iptables -A INPUT -s IPHERE -j ACCEPT
+iptables -A INPUT -s IPHERE -j ACCEPT
+
+# Allow incoming traffic from specific MAC addresses
+iptables -A INPUT -m mac --mac-source MACHERE -j ACCEPT
+iptables -A INPUT -m mac --mac-source MACHERE -j ACCEPT
+
+# Display success message
+echo "Specific hosts and MAC addresses allowed successfully"
