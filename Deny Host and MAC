@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Block incoming traffic from specific IP addresses
-iptables -A INPUT -s 192.168.1.10 -j DROP
-iptables -A INPUT -s 192.168.1.20 -j DROP
+# Allow incoming traffic from specific IP addresses
+iptables -A INPUT -s IPHERE -j DROP
+iptables -A INPUT -s IPHERE -j DROP
 
-# Block incoming traffic from specific MAC addresses
-iptables -A INPUT -m mac --mac-source 00:11:22:33:44:55 -j DROP
-iptables -A INPUT -m mac --mac-source 66:77:88:99:aa:bb -j DROP
+# Allow incoming traffic from specific MAC addresses
+iptables -A INPUT -m mac --mac-source MACHERE -j DROP
+iptables -A INPUT -m mac --mac-source MACHERE -j DROP
 
 # Display success message
 echo "Specific hosts and MAC addresses blocked successfully"
