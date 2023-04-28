@@ -1,20 +1,8 @@
 #!/bin/bash
 
-# Clear all existing rules
-iptables -F
-
-# Set default policies to allow all traffic
-iptables -P INPUT ACCEPT
-iptables -P FORWARD ACCEPT
-iptables -P OUTPUT ACCEPT
-
 # Drop all incoming and outgoing SSH traffic
 iptables -A INPUT -p tcp --dport 22 -j DROP
 iptables -A OUTPUT -p tcp --sport 22 -j DROP
-
-# Drop all other incoming and outgoing traffic
-iptables -A INPUT -j DROP
-iptables -A OUTPUT -j DROP
 
 # Display success message
 echo "SSH traffic denied successfully"
