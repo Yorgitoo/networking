@@ -1,22 +1,10 @@
 #!/bin/bash
 
-# Clear all existing rules
-iptables -F
-
-# Set default policies to allow all traffic
-iptables -P INPUT ACCEPT
-iptables -P FORWARD ACCEPT
-iptables -P OUTPUT ACCEPT
-
 # Allow incoming SSH traffic
 iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 
 # Allow outgoing SSH traffic
 iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-
-# Drop all other incoming and outgoing traffic
-iptables -A INPUT -j DROP
-iptables -A OUTPUT -j DROP
 
 # Display success message
 echo "SSH traffic allowed successfully"
