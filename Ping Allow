@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Block incoming and outgoing traffic on port 23 (telnet)
+# Allow incoming and outgoing traffic on port 23 (telnet)
 iptables -A INPUT -p tcp --dport 23 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 23 -j ACCEPT
 
 # Display success message
-echo "Telnet blocked successfully"
+echo "Ping blocked successfully"
