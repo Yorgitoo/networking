@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Allow incoming traffic from specific IP addresses
+# Block incoming traffic from specific IP addresses
 iptables -A INPUT -s IPHERE -j DROP
 iptables -A INPUT -s IPHERE -j DROP
 
-# Allow incoming traffic from specific MAC addresses
+# Block incoming traffic from specific MAC addresses
 iptables -A INPUT -m mac --mac-source MACHERE -j DROP
 iptables -A INPUT -m mac --mac-source MACHERE -j DROP
 
