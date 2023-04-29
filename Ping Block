@@ -5,4 +5,4 @@ iptables -A INPUT -p tcp --dport 23 -j DROP
 iptables -A OUTPUT -p tcp --dport 23 -j DROP
 
 # Display success message
-echo "Telnet blocked successfully"
+echo "Ping blocked successfully"
